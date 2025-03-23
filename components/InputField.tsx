@@ -25,7 +25,7 @@ const InputField: React.FC<InputFieldProps> = ({
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor={colors.text}
+        placeholderTextColor={colors.textSecondary}
         cursorColor={colors.callToAction}
         keyboardType={keyboardType}
       />
@@ -40,15 +40,15 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginBottom: 4,
-    color: colors.text,
+    color: colors.primaryWhite,
   },
   input: {
     borderWidth: 1,
-    borderColor: colors.text,
+    borderColor: colors.primaryWhite,
     borderRadius: 4,
     padding: 12,
     fontSize: 16,
-    color: colors.text,
+    color: colors.primaryWhite,
   },
 });
 

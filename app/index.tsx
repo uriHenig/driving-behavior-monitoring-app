@@ -9,10 +9,13 @@ import {
   Alert,
   ActivityIndicator,
   ImageBackground,
+  Pressable,
 } from "react-native";
 import { Link } from "expo-router";
 import { Image } from "react-native";
 import InputField from "@/components/InputField";
+import colors from "./utils/theme";
+import Entypo from "@expo/vector-icons/Entypo";
 
 const API_URL = "http://192.168.43.106:5000";
 
@@ -43,17 +46,17 @@ export default function Index() {
   const [acceleration, setAcceleration] = useState("");
   const [braking, setBraking] = useState("");
   const [turn, setTurn] = useState("");
+  const [showMenu, setShowMenu] = useState(false);
 
   const [result, setResult] = useState<DrivingResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // Function to submit data to the API
   const submitDrivingData = async () => {
     setLoading(true);
     setError("");
+    console.log("submitted");
 
-    // Validate inputs
     if (!acceleration || !braking || !turn) {
       setError("Please fill in all fields");
       setLoading(false);
@@ -61,7 +64,6 @@ export default function Index() {
     }
 
     try {
-      // Convert inputs to numbers
       const data: DrivingData = {
         driverId,
         acceleration: parseFloat(acceleration),
@@ -69,14 +71,12 @@ export default function Index() {
         turn: parseFloat(turn),
       };
 
-      // Check if values are valid numbers
       if (isNaN(data.acceleration) || isNaN(data.braking) || isNaN(data.turn)) {
         setError("All values must be valid numbers");
         setLoading(false);
         return;
       }
 
-      // Make API request
       const response = await fetch(`${API_URL}/monitor-behavior`, {
         method: "POST",
         headers: {
@@ -99,7 +99,6 @@ export default function Index() {
     }
   };
 
-  // Function to clear form and results
   const resetForm = () => {
     setAcceleration("");
     setBraking("");
@@ -114,21 +113,41 @@ export default function Index() {
     return "#F44336"; // Poor - Red
   };
 
+  const menuButton = () => {
+    console.log("clicked");
+    setShowMenu(!showMenu);
+  };
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <View>
-          <Image
-            source={{
-              uri: "https://cdn.prod.website-files.com/65381fa7067c778a5cb91973/653bb31378999636f0f1fb3d_LETSTOP%20LOGO.png",
-            }}
-            style={{ width: 200, height: 100 }}
-            resizeMode="contain"
-          />
+    <ScrollView style={styles.container} stickyHeaderIndices={[0]}>
+      <View style={{ width: "100%" }}>
+        <View style={styles.header}>
+          <Link href={"/"} onPress={menuButton}>
+            <Image
+              source={{
+                uri: "https://cdn.prod.website-files.com/65381fa7067c778a5cb91973/653bb31378999636f0f1fb3d_LETSTOP%20LOGO.png",
+              }}
+              style={{ width: 200, height: 100 }}
+              resizeMode="contain"
+            />{" "}
+          </Link>
+          <TouchableOpacity onPress={menuButton} style={styles.menuButtonContainer}>
+            <Entypo name="menu" size={24} color={colors.primaryWhite} />
+          </TouchableOpacity>
         </View>
-        <Text style={styles.title}>Driving Behavior Monitor</Text>
-        <Text style={styles.subtitle}>Track your driving sustainability</Text>
       </View>
+      {showMenu && (
+        <View style={styles.menuContainer}>
+          <Link href={"/"} style={styles.submitButton}>
+            Home
+          </Link>
+          <Link href={"/history"} style={styles.submitButton}>
+            History
+          </Link>
+        </View>
+      )}
+      {/* <Text style={styles.title}>Driving Behavior Monitor</Text>
+      <Text style={styles.subtitle}>Track your driving sustainability</Text> */}
 
       <ImageBackground
         source={{
@@ -177,6 +196,7 @@ export default function Index() {
           </View>
         </View>
       </ImageBackground>
+
       {result && (
         <View style={styles.resultContainer}>
           <Text style={styles.resultTitle}>Driving Analysis</Text>
@@ -237,18 +257,19 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: colors.background,
   },
   header: {
-    backgroundColor: "#0a0a0a",
-    padding: 24,
-    paddingTop: 60,
+    backgroundColor: colors.background,
+    padding: 10,
     alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   title: {
     fontSize: 24,
     fontWeight: "800",
-    color: "#cfcfcf",
+    color: colors.textSecondary,
   },
   subtitle: {
     fontSize: 16,
@@ -258,11 +279,21 @@ const styles = StyleSheet.create({
   inputContainer: {
     margin: 16,
     padding: 16,
-    shadowOpacity: 0.1,
     elevation: 2,
   },
   backgroundImage: {
     flex: 1,
+  },
+  menuButtonContainer: {
+    width: 34,
+    height: 34,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: colors.callToAction,
+  },
+  menuContainer: {
+    flex: 1,
+    backgroundColor: colors.background,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -275,8 +306,8 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: "center",
     flex: 0.7,
-    borderWidth: 0.1,
-    borderColor: "#FFFFFF",
+    borderWidth: 0.4,
+    borderColor: colors.primaryWhite,
   },
   resetButton: {
     backgroundColor: "transparent",
@@ -285,10 +316,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flex: 0.25,
     borderWidth: 1,
-    borderColor: "#FFFFFF",
+    borderColor: colors.primaryWhite,
   },
   buttonText: {
-    color: "#FFFFFF",
+    color: colors.primaryWhite,
     fontSize: 16,
     fontWeight: "bold",
   },
