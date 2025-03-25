@@ -15,7 +15,7 @@ const Header = () => {
   };
 
   return (
-    <BlurView intensity={100} tint="light" style={styles.blurContainer}>
+    <BlurView intensity={100} tint="dark" style={styles.blurContainer}>
       <View style={styles.header}>
         <Link href={"/"}>
           <Image
@@ -28,18 +28,8 @@ const Header = () => {
         </Link>
         <MenuButton onPress={openMenu} isMenuOpen={showMenu} />
       </View>
-      {showMenu && <MenuContainer />}
+      {showMenu && <MenuContainer isVisible={showMenu} />}
     </BlurView>
-
-    //     <View style={styles.menuContainer}>
-    //       <Link href={"/"} style={styles.submitButton}>
-    //         Home
-    //       </Link>
-    //       <Link href={"/history"} style={styles.submitButton}>
-    //         History
-    //       </Link>
-    //     </View>
-    //   )}
   );
 };
 
@@ -58,7 +48,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
-    opacity: 0.98,
+    opacity: 0.9,
+    zIndex: 200,
   },
   logo: {
     width: 200,

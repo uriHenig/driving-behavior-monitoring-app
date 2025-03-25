@@ -1,5 +1,5 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React from "react";
 import Entypo from "@expo/vector-icons/Entypo";
 import colors from "@/app/utils/theme";
 

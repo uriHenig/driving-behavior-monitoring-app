@@ -5,17 +5,12 @@ import colors from "./utils/theme";
 import Header from "@/components/Header";
 import DrivingResultDisplay from "@/components/DrivingResultDisplay";
 import Button from "@/components/Button";
-import MenuContainer from "@/components/MenuContainer";
 
 const API_URL = "http://192.168.43.106:5000";
 
 // Todo:
 // 1. fix history GET command in server
-// 2. break ap down into components - button, input, header
-// 3. style images like the expo tutorial
-// 4. make result div look like a stop sign
-// 5. wrap the app in the background image
-// 6. add hamburger menu
+
 // 7. API_URL should be in a config file
 
 interface DrivingData {

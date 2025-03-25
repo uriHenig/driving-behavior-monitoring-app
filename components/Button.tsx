@@ -4,14 +4,15 @@ import colors from "@/app/utils/theme";
 
 interface ButtonProps {
   onPress: () => void;
-  disabled: boolean;
-  text: string;
+  disabled?: boolean;
+  text?: string;
   theme: "primary" | "secondary";
   style?: object;
   loading?: boolean;
+  children?: React.ReactNode;
 }
 
-const Button: React.FC<ButtonProps> = ({ onPress, disabled, text, theme = "primary", style, loading }) => {
+const Button: React.FC<ButtonProps> = ({ onPress, disabled, text, theme = "primary", style, loading, children }) => {
   return (
     <TouchableOpacity
       style={[theme === "secondary" ? styles.secondaryButton : styles.primaryButton, style]}
@@ -25,6 +26,7 @@ const Button: React.FC<ButtonProps> = ({ onPress, disabled, text, theme = "prima
           {text}
         </Text>
       )}
+      {children}
     </TouchableOpacity>
   );
 };
