@@ -5,9 +5,10 @@ import colors from "../utils/theme";
 import Header from "@/components/Header";
 import DrivingResultDisplay from "@/components/DrivingResultDisplay";
 import Button from "@/components/Button";
+import Constants from "expo-constants";
 
-const API_URL = "http://192.168.43.106:5000";
-// const API_URL = Constants.expoConfig?.extra?.API_URL || "http://localhost:5000";
+// const API_URL = "http://192.168.43.106:5000";
+const API_URL = Constants.expoConfig?.extra?.API_URL || "http://localhost:5000";
 // Todo:
 // 1. fix history GET command in server
 
