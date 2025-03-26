@@ -1,8 +1,8 @@
-// app/utils/api.ts - API Service for clean separation of concerns
 import { Alert } from "react-native";
 import Constants from "expo-constants";
 
-const API_URL = Constants.expoConfig?.extra?.API_URL || "http://localhost:5000";
+const API_URL = "http://192.168.43.106:5000";
+// const API_URL = Constants.expoConfig?.extra?.API_URL || "http://localhost:5000";
 
 console.log("API_URL:", API_URL);
 
@@ -31,9 +31,7 @@ export interface DrivingEvent {
   timestamp: string;
 }
 
-// API Service
 export const api = {
-  // Submit driving data
   async submitDrivingData(data: DrivingData): Promise<DrivingResponse> {
     try {
       const response = await fetch(`${API_URL}/monitor-behavior`, {
@@ -55,21 +53,21 @@ export const api = {
       throw error;
     }
   },
-
-  // Get driving history for a driver
-  async getDrivingHistory(driverId: string): Promise<DrivingEvent[]> {
-    try {
-      const response = await fetch(`${API_URL}/driving-history/${driverId}`);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Unknown error";
-      console.error(`Failed to fetch driving history: ${errorMessage}`);
-      throw error;
-    }
-  },
 };
+
+//   async getDrivingHistory(driverId: string): Promise<DrivingEvent[]> {
+//     try {
+//       const response = await fetch(`${API_URL}/driving-history/${driverId}`);
+
+//       if (!response.ok) {
+//         throw new Error(`HTTP error! Status: ${response.status}`);
+//       }
+
+//       return await response.json();
+//     } catch (error) {
+//       const errorMessage = error instanceof Error ? error.message : "Unknown error";
+//       console.error(`Failed to fetch driving history: ${errorMessage}`);
+//       throw error;
+//     }
+//   },
+// };

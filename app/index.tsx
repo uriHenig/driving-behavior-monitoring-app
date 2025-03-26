@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, ScrollView, Alert, ImageBackground } from "react-native";
 import InputField from "@/components/InputField";
-import colors from "./utils/theme";
+import colors from "../utils/theme";
 import Header from "@/components/Header";
 import DrivingResultDisplay from "@/components/DrivingResultDisplay";
 import Button from "@/components/Button";
 
 const API_URL = "http://192.168.43.106:5000";
-
+// const API_URL = Constants.expoConfig?.extra?.API_URL || "http://localhost:5000";
 // Todo:
 // 1. fix history GET command in server
 
@@ -102,7 +102,7 @@ export default function Index() {
         style={styles.backgroundImage}
         resizeMode="cover"
       >
-        <Text style={styles.title}>Braking bad habits Together.</Text>
+        <Text style={styles.title}>Braking bad driving habits Together.</Text>
 
         <View style={styles.inputContainer}>
           <InputField label="Driver ID" value={driverId} onChangeText={setDriverId} placeholder="Enter driver ID" />

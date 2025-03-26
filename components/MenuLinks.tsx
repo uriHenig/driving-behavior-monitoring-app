@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { Link } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import colors from "@/app/utils/theme";
+import colors from "@/utils/theme";
 
 const MenuLinks = () => {
   return (

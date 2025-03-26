@@ -1,7 +1,7 @@
 import { Image, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import { Link } from "expo-router";
-import colors from "@/app/utils/theme";
+import colors from "@/utils/theme";
 import { BlurView } from "expo-blur";
 import MenuButton from "./MenuButton";
 import MenuContainer from "./MenuContainer";
@@ -10,7 +10,6 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   const openMenu = () => {
-    console.log("i was opened");
     setShowMenu((prev) => !prev);
   };
 

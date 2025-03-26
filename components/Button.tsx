@@ -1,6 +1,6 @@
 import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import colors from "@/app/utils/theme";
+import colors from "@/utils/theme";
 
 interface ButtonProps {
   onPress: () => void;
@@ -9,10 +9,9 @@ interface ButtonProps {
   theme: "primary" | "secondary";
   style?: object;
   loading?: boolean;
-  children?: React.ReactNode;
 }
 
-const Button: React.FC<ButtonProps> = ({ onPress, disabled, text, theme = "primary", style, loading, children }) => {
+const Button: React.FC<ButtonProps> = ({ onPress, disabled, text, theme = "primary", style, loading }) => {
   return (
     <TouchableOpacity
       style={[theme === "secondary" ? styles.secondaryButton : styles.primaryButton, style]}
@@ -26,7 +25,6 @@ const Button: React.FC<ButtonProps> = ({ onPress, disabled, text, theme = "prima
           {text}
         </Text>
       )}
-      {children}
     </TouchableOpacity>
   );
 };
