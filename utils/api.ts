@@ -1,12 +1,10 @@
 import { Alert } from "react-native";
 import Constants from "expo-constants";
 
-// const API_URL = "http://192.168.43.106:5000";
 const API_URL = Constants.expoConfig?.extra?.API_URL || "http://localhost:5000";
 
 console.log("API_URL:", API_URL);
 
-// Types
 export interface DrivingData {
   driverId: string;
   acceleration: number;
@@ -20,16 +18,16 @@ export interface DrivingResponse extends DrivingData {
   sustainabilityScore: string;
 }
 
-export interface DrivingEvent {
-  _id: string;
-  driverId: string;
-  acceleration: number;
-  braking: number;
-  turn: number;
-  isFlagged: boolean;
-  sustainabilityScore: number;
-  timestamp: string;
-}
+// export interface DrivingEvent {
+//   _id: string;
+//   driverId: string;
+//   acceleration: number;
+//   braking: number;
+//   turn: number;
+//   isFlagged: boolean;
+//   sustainabilityScore: number;
+//   timestamp: string;
+// }
 
 export const api = {
   async submitDrivingData(data: DrivingData): Promise<DrivingResponse> {

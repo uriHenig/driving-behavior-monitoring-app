@@ -5,27 +5,10 @@ import colors from "../utils/theme";
 import Header from "@/components/Header";
 import DrivingResultDisplay from "@/components/DrivingResultDisplay";
 import Button from "@/components/Button";
-import Constants from "expo-constants";
+import { api, DrivingResponse, DrivingData } from "@/utils/api";
 
-// const API_URL = "http://192.168.43.106:5000";
-const API_URL = Constants.expoConfig?.extra?.API_URL || "http://localhost:5000";
 // Todo:
 // 1. fix history GET command in server
-
-// 7. API_URL should be in a config file
-
-interface DrivingData {
-  driverId: string;
-  acceleration: number;
-  braking: number;
-  turn: number;
-}
-
-interface DrivingResponse extends DrivingData {
-  isFlagged: boolean;
-  timestamp: string;
-  sustainabilityScore: string;
-}
 
 export default function Index() {
   const [driverId, setDriverId] = useState("driver123");
@@ -62,19 +45,7 @@ export default function Index() {
         return;
       }
 
-      const response = await fetch(`${API_URL}/monitor-behavior`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const responseData = await response.json();
+      const responseData = await api.submitDrivingData(data);
       setResult(responseData);
     } catch (err) {
       setError(`Failed to submit data: ${err instanceof Error ? err.message : "Unknown error"}`);
