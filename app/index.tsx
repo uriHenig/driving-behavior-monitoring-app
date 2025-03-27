@@ -6,9 +6,6 @@ import DrivingResultDisplay from "@/components/resultCard/DrivingResultDisplay";
 import { DrivingResponse } from "@/lib/types";
 import DrivingDataForm from "@/components/inputForm/DrivingDataForm";
 
-// Todo:
-// 1. fix history GET command in server
-
 export default function Index() {
   const [result, setResult] = useState<DrivingResponse | null>(null);
 

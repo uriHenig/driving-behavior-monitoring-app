@@ -6,7 +6,6 @@ export default {
     slug: "driving-behavior-monitoring-app",
     version: "1.0.0",
     orientation: "portrait",
-    // icon: "./assets/images/icon.png",
     scheme: "myapp",
     userInterfaceStyle: "automatic",
     newArchEnabled: true,
@@ -41,7 +40,6 @@ export default {
     },
     extra: {
       API_URL: "http://192.168.43.106:5000",
-      // API_URL: process.env.API_URL || "http://localhost:5000",
     },
   },
 };
