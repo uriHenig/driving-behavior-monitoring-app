@@ -5,31 +5,28 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import colors from "@/lib/theme";
 
 const MenuLinks = () => {
+  const links = [
+    { label: "How It Works" },
+    { label: "Token" },
+    { label: "FAQ" },
+    { label: "Contact" },
+    { label: "Whitepaper" },
+  ];
   return (
     <View style={styles.links}>
-      <Link href={"/"} style={styles.homeLink}>
+      <Link href={"/"} style={styles.buttonLink}>
         Home
       </Link>
-      <Link href={"/#"} style={styles.link}>
-        How It Works
-      </Link>
-      <Link href={"/#"} style={styles.link}>
-        Token
-      </Link>
-      <Link href={"/#"} style={styles.link}>
-        FAQ
-      </Link>
-      <Link href={"/#"} style={styles.link}>
-        Contact
-      </Link>
-      <Link href={"/#"} style={styles.link}>
-        Whitepaper
-      </Link>
+      {links.map((link, index) => (
+        <Link key={index} href={"/#"} style={styles.link}>
+          {link.label}
+        </Link>
+      ))}
       <View style={styles.textContainer}>
         <Text style={styles.textStyle}>Language</Text>
         <AntDesign name="down" style={styles.downArrow} />
       </View>
-      <Link href={"/#"} style={styles.getStartedLink}>
+      <Link href={"/#"} style={[styles.buttonLink, styles.buttonBorder]}>
         Get Started & Earn
       </Link>
     </View>
@@ -71,14 +68,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     color: colors.primaryWhite,
   },
-  getStartedLink: {
+  buttonLink: {
     backgroundColor: "#FF132A",
     borderRadius: 10,
     paddingVertical: 8,
     paddingHorizontal: 16,
     alignItems: "center",
-    borderWidth: 0.4,
-    borderColor: colors.primaryWhite,
     color: colors.primaryWhite,
+  },
+  buttonBorder: {
+    borderColor: colors.primaryWhite,
+    borderWidth: 0.4,
   },
 });

@@ -1,50 +1,85 @@
-# Welcome to your Expo app 👋
+# Driving Behavior Monitoring API
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This API monitors driving behavior, flags unsafe driving events, and calculates a sustainability score based on driving patterns.
 
-## Get started
+## Backend Setup Instructions
 
-1. Install dependencies
+1. Install dependencies:
 
-   ```bash
+   ```
    npm install
    ```
 
-2. Start the app
+2. Make sure MongoDB is running on your local machine at port 27017. If you're using a different MongoDB connection string, update it in `server.js`.
 
-   ```bash
-    npx expo start
+3. Start the server:
+
+   ```
+   npm start
    ```
 
-In the output, you'll find options to open the app in a
+   Or for development with auto-restart:
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   ```
+   npm run dev
+   ```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+4. The server will run on port 5000 by default. You can change this by setting the PORT environment variable.
 
-## Get a fresh project
+## API Endpoints
 
-When you're ready, run:
+### POST /monitor-behavior
 
-```bash
-npm run reset-project
+Monitors driving behavior and calculates a sustainability score.
+
+**Request Body:**
+
+```json
+{
+  "driverId": "driver123",
+  "acceleration": 4.5, // m/s²
+  "braking": 5.2, // m/s²
+  "turn": 3.0, // m/s² (lateral force)
+  "timestamp": "2025-02-14T15:30:00Z" // Optional
+}
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+**Response:**
 
-## Learn more
+```json
+{
+  "driverId": "driver123",
+  "acceleration": 4.5,
+  "braking": 5.2,
+  "turn": 3.0,
+  "isFlagged": true,
+  "timestamp": "2025-02-14T15:30:00Z",
+  "sustainabilityScore": 0.72
+}
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+## Assumptions and Design Choices
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Flagging Criteria
 
-## Join the community
+- Acceleration threshold: 3.0 m/s²
+- Braking threshold: 4.0 m/s²
+- Turn threshold: 2.5 m/s²
 
-Join our community of developers creating universal apps.
+### Sustainability Score Calculation
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- The sustainability score is calculated as:
+  `1 - (average of normalized acceleration, braking, and turn values)`
+- Each value is normalized against its threshold (capped at 1 for values exceeding the threshold)
+- A higher score indicates more sustainable driving
+- The score ranges from 0 (poor) to 1 (excellent)
+
+### Error Handling
+
+- The API performs basic input validation
+- Errors are logged to the console and appropriate HTTP status codes are returned
+
+### Database
+
+- MongoDB is used to store driving event data
+- The schema includes all driving parameters, flag status, and the sustainability score

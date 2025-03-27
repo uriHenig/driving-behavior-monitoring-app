@@ -15,13 +15,6 @@ export default function RootLayout() {
             title: "Driving Behavior Monitor",
           }}
         />
-        <Stack.Screen
-          name="history"
-          options={{
-            headerShown: false,
-            title: "Driving History",
-          }}
-        />
       </Stack>
     </SafeAreaProvider>
   );

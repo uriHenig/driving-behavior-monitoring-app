@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import DrivingMetrics from "./DrivingMetrics";
+import DrivingMetrics from "@/components/resultCard/DrivingMetrics";
 
 interface DrivingResultDisplayProps {
   result: {
