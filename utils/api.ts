@@ -1,37 +1,27 @@
 import { Alert } from "react-native";
 import Constants from "expo-constants";
+import { DrivingData, DrivingResponse } from "@/lib/types";
 
 const API_URL = Constants.expoConfig?.extra?.API_URL || "http://localhost:5000";
 
-console.log("API_URL:", API_URL);
-
-export interface DrivingData {
-  driverId: string;
-  acceleration: number;
-  braking: number;
-  turn: number;
-}
-
-export interface DrivingResponse extends DrivingData {
-  isFlagged: boolean;
-  timestamp: string;
-  sustainabilityScore: string;
-}
-
-// export interface DrivingEvent {
-//   _id: string;
+// export interface DrivingData {
 //   driverId: string;
 //   acceleration: number;
 //   braking: number;
 //   turn: number;
+// }
+
+// export interface DrivingResponse extends DrivingData {
 //   isFlagged: boolean;
-//   sustainabilityScore: number;
 //   timestamp: string;
+//   sustainabilityScore: number;
 // }
 
 export const api = {
   async submitDrivingData(data: DrivingData): Promise<DrivingResponse> {
     try {
+      // console.log("API Request Payload:", JSON.stringify(data, null, 2));
+
       const response = await fetch(`${API_URL}/monitor-behavior`, {
         method: "POST",
         headers: {
@@ -40,10 +30,11 @@ export const api = {
         body: JSON.stringify(data),
       });
 
+      // console.log("Response Status:", response.status);
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
       return await response.json();
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Unknown error";
@@ -52,20 +43,3 @@ export const api = {
     }
   },
 };
-
-//   async getDrivingHistory(driverId: string): Promise<DrivingEvent[]> {
-//     try {
-//       const response = await fetch(`${API_URL}/driving-history/${driverId}`);
-
-//       if (!response.ok) {
-//         throw new Error(`HTTP error! Status: ${response.status}`);
-//       }
-
-//       return await response.json();
-//     } catch (error) {
-//       const errorMessage = error instanceof Error ? error.message : "Unknown error";
-//       console.error(`Failed to fetch driving history: ${errorMessage}`);
-//       throw error;
-//     }
-//   },
-// };

@@ -1,7 +1,7 @@
 import { StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import Entypo from "@expo/vector-icons/Entypo";
-import colors from "@/utils/theme";
+import colors from "@/lib/theme";
 
 interface MenuButtonProps {
   onPress: () => void;

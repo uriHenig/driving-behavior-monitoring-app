@@ -5,7 +5,7 @@ import DrivingMetrics from "./DrivingMetrics";
 interface DrivingResultDisplayProps {
   result: {
     isFlagged: boolean;
-    sustainabilityScore: string;
+    sustainabilityScore: number;
     acceleration: number;
     braking: number;
     turn: number;
@@ -14,6 +14,9 @@ interface DrivingResultDisplayProps {
 }
 
 const DrivingResultDisplay: React.FC<DrivingResultDisplayProps> = ({ result }) => {
+  {
+    console.log("recieved result", result);
+  }
   const getScoreColor = (score: number) => {
     if (score >= 0.8) return "#4CAF50"; // Good - Green
     if (score >= 0.5) return "#FFC107"; // Medium - Yellow/Amber
@@ -33,8 +36,8 @@ const DrivingResultDisplay: React.FC<DrivingResultDisplayProps> = ({ result }) =
 
       <View style={styles.scoreContainer}>
         <Text style={styles.scoreLabel}>Sustainability Score</Text>
-        <View style={[styles.scoreCircle, { backgroundColor: getScoreColor(parseFloat(result.sustainabilityScore)) }]}>
-          <Text style={styles.scoreValue}>{Math.round(parseFloat(result.sustainabilityScore) * 100)}</Text>
+        <View style={[styles.scoreCircle, { backgroundColor: getScoreColor(result.sustainabilityScore) }]}>
+          <Text style={styles.scoreValue}>{Math.round(result.sustainabilityScore * 100)}</Text>
         </View>
       </View>
 

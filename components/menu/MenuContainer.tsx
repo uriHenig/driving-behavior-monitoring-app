@@ -1,6 +1,6 @@
 import { Animated, Dimensions, StyleSheet } from "react-native";
 import React, { useEffect, useRef } from "react";
-import colors from "@/utils/theme";
+import colors from "@/lib/theme";
 import MenuLinks from "./MenuLinks";
 
 interface MenuContainerProps {

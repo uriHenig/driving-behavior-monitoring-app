@@ -1,10 +1,10 @@
 import { Image, StyleSheet, View } from "react-native";
 import React, { useState } from "react";
 import { Link } from "expo-router";
-import colors from "@/utils/theme";
+import colors from "@/lib/theme";
 import { BlurView } from "expo-blur";
-import MenuButton from "./MenuButton";
-import MenuContainer from "./MenuContainer";
+import MenuButton from "./menu/MenuButton";
+import MenuContainer from "./menu/MenuContainer";
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);

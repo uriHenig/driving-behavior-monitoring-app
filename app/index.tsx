@@ -1,67 +1,125 @@
+// import React, { useState } from "react";
+// import { StyleSheet, ScrollView, Text, ImageBackground } from "react-native";
+// import Header from "@/components/Header";
+// import DrivingResultDisplay from "@/components/DrivingResultDisplay";
+// import DrivingDataForm from "@/components/DrivingDataForm";
+// import colors from "@/utils/theme";
+// import { DrivingResponse } from "@/utils/api";
+
+// export default function Index() {
+//   const [result, setResult] = useState<DrivingResponse | null>(null);
+
+//   const handleSubmitSuccess = (responseData: DrivingResponse) => {
+//     setResult(responseData);
+//   };
+
+//   const handleResetForm = () => {
+//     setResult(null);
+//   };
+
+//   return (
+//     <ScrollView style={styles.container} stickyHeaderIndices={[0]}>
+//       <Header />
+
+//       <ImageBackground
+//         source={{
+//           uri: "https://cdn.prod.website-files.com/65381fa7067c778a5cb91973/658456acfeca5d5213dd2bbb_Phone%20background-1.png",
+//         }}
+//         style={styles.backgroundImage}
+//         resizeMode="cover"
+//       >
+//         <Text style={styles.title}>Braking bad driving habits Together.</Text>
+
+//         <DrivingDataForm onSubmitSuccess={handleSubmitSuccess} onResetForm={handleResetForm} />
+//       </ImageBackground>
+//       {result && <DrivingResultDisplay result={result} />}
+//     </ScrollView>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: colors.background,
+//   },
+//   backgroundImage: {
+//     flex: 1,
+//   },
+//   title: {
+//     fontSize: 18,
+//     fontWeight: "400",
+//     marginTop: 10,
+//     color: colors.title,
+//     textAlign: "center",
+//   },
+// });
+
 import React, { useState } from "react";
 import { StyleSheet, Text, View, ScrollView, Alert, ImageBackground } from "react-native";
 import InputField from "@/components/InputField";
-import colors from "../utils/theme";
+import colors from "../lib/theme";
 import Header from "@/components/Header";
 import DrivingResultDisplay from "@/components/DrivingResultDisplay";
 import Button from "@/components/Button";
-import { api, DrivingResponse, DrivingData } from "@/utils/api";
+import { DrivingResponse, DrivingData } from "@/lib/types";
+import { api } from "@/utils/api";
+import DrivingDataForm from "@/components/DrivingDataForm";
 
 // Todo:
 // 1. fix history GET command in server
 
 export default function Index() {
-  const [driverId, setDriverId] = useState("driver123");
-  const [acceleration, setAcceleration] = useState("");
-  const [braking, setBraking] = useState("");
-  const [turn, setTurn] = useState("");
-
   const [result, setResult] = useState<DrivingResponse | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  // const [driverId, setDriverId] = useState("driver123");
+  // const [acceleration, setAcceleration] = useState("");
+  // const [braking, setBraking] = useState("");
+  // const [turn, setTurn] = useState("");
 
-  const submitDrivingData = async () => {
-    setLoading(true);
-    setError("");
-    console.log("submitted");
+  // const [result, setResult] = useState<DrivingResponse | null>(null);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState("");
 
-    if (!acceleration || !braking || !turn) {
-      setError("Please fill in all fields");
-      setLoading(false);
-      return;
-    }
+  // const submitDrivingData = async () => {
+  //   setLoading(true);
+  //   setError("");
 
-    try {
-      const data: DrivingData = {
-        driverId,
-        acceleration: parseFloat(acceleration),
-        braking: parseFloat(braking),
-        turn: parseFloat(turn),
-      };
+  //   if (!acceleration || !braking || !turn) {
+  //     setError("Please fill in all fields");
+  //     setLoading(false);
+  //     return;
+  //   }
 
-      if (isNaN(data.acceleration) || isNaN(data.braking) || isNaN(data.turn)) {
-        setError("All values must be valid numbers");
-        setLoading(false);
-        return;
-      }
+  //   try {
+  //     const data: DrivingData = {
+  //       driverId,
+  //       acceleration: parseFloat(acceleration), //check if preferable to
+  //       braking: parseFloat(braking), //just set usestate as number
+  //       turn: parseFloat(turn),
+  //     };
 
-      const responseData = await api.submitDrivingData(data);
-      setResult(responseData);
-    } catch (err) {
-      setError(`Failed to submit data: ${err instanceof Error ? err.message : "Unknown error"}`);
-      Alert.alert("Error", "Failed to submit driving data. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     if (isNaN(data.acceleration) || isNaN(data.braking) || isNaN(data.turn)) {
+  //       setError("All values must be valid numbers");
+  //       setLoading(false);
+  //       return;
+  //     }
 
-  const resetForm = () => {
-    setAcceleration("");
-    setBraking("");
-    setTurn("");
-    setResult(null);
-    setError("");
-  };
+  //     const responseData = await api.submitDrivingData(data);
+  //     setResult(responseData);
+  //   } catch (err) {
+  //     setError(`Failed to submit data: ${err instanceof Error ? err.message : "Unknown error"}`);
+  //     Alert.alert("Error", "Failed to submit driving data. Please try again.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // const resetForm = () => {
+  //   setAcceleration("");
+  //   setBraking("");
+  //   setTurn("");
+  //   setResult(null);
+  //   setError("");
+  // };
 
   return (
     <ScrollView style={styles.container} stickyHeaderIndices={[0]}>
@@ -76,7 +134,7 @@ export default function Index() {
       >
         <Text style={styles.title}>Braking bad driving habits Together.</Text>
 
-        <View style={styles.inputContainer}>
+        {/* <View style={styles.inputContainer}>
           <InputField label="Driver ID" value={driverId} onChangeText={setDriverId} placeholder="Enter driver ID" />
           <InputField
             label="Acceleration (m/s²)"
@@ -112,7 +170,8 @@ export default function Index() {
             />
             <Button theme="secondary" onPress={resetForm} disabled={loading} text="Reset" style={{ flex: 0.25 }} />
           </View>
-        </View>
+        </View> */}
+        <DrivingDataForm onSubmitResult={setResult} />
       </ImageBackground>
       {result && <DrivingResultDisplay result={result} />}
     </ScrollView>
