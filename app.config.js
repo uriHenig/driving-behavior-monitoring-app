@@ -39,7 +39,7 @@ export default {
       typedRoutes: true,
     },
     extra: {
-      API_URL: "http://192.168.43.106:5000",
+      API_URL: "http://your key:5000",
     },
   },
 };
