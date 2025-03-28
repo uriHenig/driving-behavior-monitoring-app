@@ -4,23 +4,9 @@ import { DrivingData, DrivingResponse } from "@/lib/types";
 
 const API_URL = Constants.expoConfig?.extra?.API_URL || "http://localhost:5000";
 
-// export interface DrivingData {
-//   driverId: string;
-//   acceleration: number;
-//   braking: number;
-//   turn: number;
-// }
-
-// export interface DrivingResponse extends DrivingData {
-//   isFlagged: boolean;
-//   timestamp: string;
-//   sustainabilityScore: number;
-// }
-
 export const api = {
   async submitDrivingData(data: DrivingData): Promise<DrivingResponse> {
     try {
-      // console.log("API Request Payload:", JSON.stringify(data, null, 2));
 
       const response = await fetch(`${API_URL}/monitor-behavior`, {
         method: "POST",
@@ -29,8 +15,6 @@ export const api = {
         },
         body: JSON.stringify(data),
       });
-
-      // console.log("Response Status:", response.status);
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
